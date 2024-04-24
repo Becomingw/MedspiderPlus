@@ -45,7 +45,7 @@ Ensure Python version 3.10 or higher is installed.
 
 ### Simplified Method
 
-Download the `Medspider+.7z` file from the releases section, extract it, and double-click `run.vsb` to start the application.
+Download the `Medspider+.7z` file from the releases section, extract it, and double-click `run.vbs` to start the application.
 
 ## Usage
 
@@ -56,6 +56,8 @@ Follow the sequence of actions for optimal operation:
 3. Set up network proxies.
 4. Initiate the search.
 5. Download the literature only if search results are present and confirmed by the presence of `Medspider+.xlsx`.
+6. GreatAPI https://api.surger.xyz
+
 
 **Notes:**
 

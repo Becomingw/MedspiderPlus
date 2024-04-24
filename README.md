@@ -72,7 +72,7 @@ python main.py
 
 **简易方法**📖：
 
-下载release的Medspider+.7z文件，解压后，双击`run.vsb`即可运行。
+release的Medspider+.7z文件，解压后，双击`run.vbs`即可运行。
 
 #### 3.2.使用及注意事项：
 
@@ -87,7 +87,10 @@ python main.py
 5.网络代理的随机代理有时候不是很稳定，产生网络报错属于正常。如果你的文献数量不大，可以裸连下载。；
 
 6.不建议大批量下载，本程序本质是一个爬虫，所以也你懂的😇。
+
 7.cookie.txt 内格式应符合json格式
+
+8. [GratAPI](https://api.surger.xyz)
 
 ### 4. 其他🧪：
 
