@@ -5,6 +5,7 @@
 <img src="https://image-1307946721.cos.ap-shanghai.myqcloud.com/20240424213005.png" style="zoom:33%;" />
 
 ## 2.简介📝：
+简体中文 | [English](./README_en.md)
 
 与[Medspider](https://github.com/Becomingw/Med-Spider)相似。该项目是一个基于Python的GUI（Tkinter）工具，旨在通过让ChatGPT提供的关键词，从PubMed数据库中检索相关文献并提供免费文献的PDF下载。相比自己给关键词（写正则表达式），ChatGPT更擅长这一任务，你要做的就是给它一个你想要了解的领域🤓！
 
