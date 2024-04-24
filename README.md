@@ -1,8 +1,8 @@
-# MedspiderPlus<img src="https://image-1307946721.cos.ap-shanghai.myqcloud.com/logo.png" alt="logo" style="zoom: 25%;" />
+# MedspiderPlus<img src="https://image-1307946721.cos.ap-shanghai.myqcloud.com/logo.png" alt="logo" width=39;/>
 
 ## 1.图示🧬：
 
-<img src="https://image-1307946721.cos.ap-shanghai.myqcloud.com/20240424213005.png" style="zoom:10%;" />
+<img src="https://image-1307946721.cos.ap-shanghai.myqcloud.com/20240424213005.png" width=200 />
 
 ## 2.简介📝：
 简体中文 | [English](./README_en.md)
