@@ -165,7 +165,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.tableView.resizeColumnsToContents()
     
     def open_website(self):
-        webbrowser.open('https://github.com/Becomingw/Medspider+')
+        webbrowser.open('https://github.com/Becomingw/MedspiderPlus')
 
     def closeEvent(self, event):
         # 创建一个消息框，询问用户是否真的要关闭窗口
