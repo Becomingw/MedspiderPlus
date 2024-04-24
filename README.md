@@ -2,7 +2,7 @@
 
 ## 1.图示🧬：
 
-<img src="https://image-1307946721.cos.ap-shanghai.myqcloud.com/20240424213005.png" style="zoom:33%;" />
+<img src="https://image-1307946721.cos.ap-shanghai.myqcloud.com/20240424213005.png" style="zoom:10%;" />
 
 ## 2.简介📝：
 
