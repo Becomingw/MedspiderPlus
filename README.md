@@ -35,7 +35,7 @@
 
 **可下载更多文章**：
 
-后续有时间将更新直接从出版商处下载文献（cookie法),。
+后续有时间将更新直接从出版商处下载文献（cookie法）。
 
 目前已支持：AHA杂志社（大善人🤤，大部分期刊都是解锁的）
 
@@ -70,9 +70,9 @@ pip install -r requirements.txt #-i https://pypi.tuna.tsinghua.edu.cn/simple（�
 python main.py
 ```
 
-**简易方法**📖：
+**简易方法**📖(推荐)：
 
-release的Medspider+.7z文件，解压后，双击`run.vbs`即可运行。
+release的MedspiderPlus.7z文件，解压后，点击`install.bat` 或 `run_first.vbs` 之后双击`run.vbs`即可运行。
 
 #### 3.2.使用及注意事项：
 
@@ -90,7 +90,11 @@ release的Medspider+.7z文件，解压后，双击`run.vbs`即可运行。
 
 7.cookie.txt 内格式应符合json格式
 
-8. [GratAPI](https://api.surger.xyz)
+8.程序AI部分代理主要接入了来自DeepAIR深影的[GratAPI](https://api.surger.xyz)🎟️，一个基于OneAPI的免费代理。
+
+9.程序的AI部分核心依赖于Openai库(不能使用最新版)，请一定按照`requirements.txt`中的依赖进行配置。
+
+10.由于程序UI为响应式，因此运行时，窗口可能过小，导致部分功能被隐藏，请自行调整窗口大小。
 
 ### 4. 其他🧪：
 
@@ -102,8 +106,9 @@ release的Medspider+.7z文件，解压后，双击`run.vbs`即可运行。
 
 4.其他就自行探索吧。
 
-5.希望能有人:star:,以及PR
+5.希望能有人:star:,以及PR✨。
 
+### 5.免费程序，请不要用于商业或非法用途😁
 
 
 
