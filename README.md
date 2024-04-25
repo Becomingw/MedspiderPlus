@@ -72,7 +72,9 @@ python main.py
 
 **简易方法**📖(推荐)：
 
-release的MedspiderPlus.7z文件，解压后，点击`install.bat` 或 `run_first.vbs` 之后双击`run.vbs`即可运行。
+下载[Release](https://github.com/Becomingw/MedspiderPlus/releases/tag/0.1beta)的网盘MedspiderPlus.7z文件（提供蓝奏云与谷歌网盘下载），解压后，点击`install.bat` 或 `run_first.vbs` 之后双击`run.vbs`即可运行。
+
+ps:未针对海外用户进行优化，如果出现报错，请自行解决🤗。
 
 #### 3.2.使用及注意事项：
 
