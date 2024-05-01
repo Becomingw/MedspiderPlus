@@ -100,7 +100,7 @@ ps:未针对海外用户进行优化，如果出现报错，请自行解决🤗�
 
 6.不建议大批量下载，本程序本质是一个爬虫，所以也你懂的😇。
 
-7.cookie.txt 内格式应符合json格式
+7.~~cookie.txt 内格式应符合json格式~~，现已整合进入`config.yaml`。
 
 8.程序AI部分代理主要接入了来自DeepAIR深影的[GratAPI](https://api.surger.xyz)🎟️，一个基于OneAPI的免费代理。
 
