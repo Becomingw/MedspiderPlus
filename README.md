@@ -14,7 +14,7 @@
 ## 2.简介📝：
 简体中文 | [English](./README_en.md)
 
-如果本程序对你有帮助，请给我一个star🤗。
+**如果本程序对你有帮助，请给我一个免费的star🤗。**
 
 与[Medspider](https://github.com/Becomingw/Med-Spider)相似。该项目是一个基于Python的GUI（Tkinter）工具，旨在通过让ChatGPT提供的关键词，从PubMed文献数据库中检索相关文献并提供免费文献的PDF下载。相比自己写检索关键词（写正则表达式），ChatGPT更擅长这一任务，你要做的就是给它一个你想要了解的领域🤓！
 
@@ -121,19 +121,6 @@ ps:未针对海外用户进行优化，如果出现报错，请自行解决🤗�
 
 
 ### 5.免费程序，请不要用于商业或非法用途😁
-    
-2.程序的UI文件为Med.UI,可以自行丢进QtDesigner中重新设计，但是注意修改对应的main的内容。
-
-2.外观程序在main.py的最低端，可以自行切换喜欢的主题，支持的主题https://github.com/UN-GCPDS/qt-material
-
-3.本程序的UI文件为Med.UI,可以自行丢进QtDesigner中重新设计，但是注意修改对应的main的内容。
-
-4.其他就自行探索吧。
-
-5.希望能有人:star:,以及PR✨。
-
-### 5.免费程序，请不要用于商业或非法用途😁
-
 
 
 
