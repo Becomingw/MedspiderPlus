@@ -1,7 +1,7 @@
 import random
 import traceback
 import webbrowser
-
+import os
 import pandas as pd
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt, QObject, pyqtSignal, QThread
@@ -9,9 +9,10 @@ from PyQt5.QtGui import QStandardItemModel, QStandardItem, QTextCursor
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
 from qt_material import apply_stylesheet
 
-from finder import Gpt_finder  # 导入你的 Gpt_finder 类
-from ui_mod import Ui_MainWindow  # 确保导入了你的 UI 类
-from utils import get_proxy
+from finder import Gpt_finder  
+from ui_mod import Ui_MainWindow  
+from utils import get_proxy,read_yaml
+root_path = os.path.dirname(os.path.realpath(__file__))
 
 
 class Stream(QObject):
@@ -86,7 +87,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def toggle_use_proxy(self, state):
         if state == Qt.Checked:
             self.gpt_finder.proxy = get_proxy(random.choice([True,False]))
-            print("已开启网络代理:",self.gpt_finder.proxy)
+            print("已开启网络代理:",self.gpt_finder.proxy) 
         else:
             self.gpt_finder.proxy = False
             print("已关闭网络代理")
@@ -96,7 +97,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         query = self.textEdit.toPlainText()  # 获取查询文本
         api_key = self.lineEdit_2.text()  # 获取 API Key
         self.progressBar.setValue(0)
-        self.worker = Worker(self.gpt_finder.find_reserch, query, api_key)
+        if "*****" in api_key:
+            true_key = read_yaml(root_path+"/config.yaml")["api_key"]
+        else:
+            true_key = api_key
+        QMessageBox.information(self, "查询状态", f"查询任务已开始，请稍候。\nAPI Key: {true_key} modle: {self.comboBox.currentText()}")
+        self.worker = Worker(self.gpt_finder.find_reserch, query, true_key)
         self.worker.finished.connect(self.handle_search_result)
         self.worker.error.connect(self.handle_error)
         self.worker.progress.connect(self.progressBar.setValue)  # 更新进度条

@@ -9,10 +9,21 @@ from zhipuai import ZhipuAI
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 from retrying import retry
+import yaml
+from cookie_download import *
 
+download_cfg ={'10.1161':stroke,           # 这里是使用特殊下载的定义处，其中stroke是stroke下载方法（见cookie_download.py）,"10.1161"是来自doi的发行商标识，   
+}
 
 father_path = os.getcwd()
 root_path = os.path.dirname(os.path.realpath(__file__))
+
+
+def read_yaml(yaml_path):
+    with open(yaml_path, 'r', encoding='utf-8') as file:
+        data = yaml.safe_load(file)
+    return data
+
 def get_proxy(shift=False):  # 加入代理访问
     if shift:
         url =  "https://proxypool.scrape.center/random"
@@ -39,8 +50,6 @@ def great_url_responce(kw,page,year,proxy):
                             params=params_dic,
                             headers={"User-Agent": UserAgent().random}
                             )
-
-
     return reponse
 
 
@@ -58,13 +67,14 @@ def openai_research(kw,openkey,md="gpt-3.5-turbo",proxy='https://api.surger.xyz/
         pass
     else:
         openai.api_base = proxy
+    if "moonshot" in md:
+        openai.api_base = "https://api.moonshot.cn/v1"
     openai.api_key = openkey
     completion = openai.ChatCompletion.create(
         model=md,
-        temperature = 0.8,
+        temperature = 0.7,
         messages=[
-            {"role": "user", "content": "你是一位精通PubMed检索的学者，请你分析我提供的研究主题和关键词。"
-                                        "基于PubMed语法构建检索公式。确保检索公式精确且实用。直接仅提供最终的PubMed检索公式,且检索式不能包含中文。我的研究是："+kw}
+            {"role": "user", "content": "你是一位精通PubMed检索的学者，请你分析我的研究内容。基于PubMed语法构建检索公式，直接提供最终的PubMed检索公式（不用对回答进行解释）,且检索式不能包含中文。我的研究是："+kw}
         ]
     )
     key_word = completion.choices[0].message['content']
@@ -77,12 +87,11 @@ def GLM_reaserch(kw,key):
         client = ZhipuAI(api_key=key)
         response = client.chat.completions.create(
             model="glm-4",  # 填写需要调用的模型名称
-            temperature = 0.8,
+            temperature = 0.7,
             messages=[
                 {
                     "role": "user",
-                    "content": "你是一位精通PubMed检索的学者，请你分析我提供的研究主题和关键词。"
-                                            "基于PubMed语法构建检索公式。确保检索公式精确且实用。直接仅回复最终的PubMed检索公式,且检索式不能包含中文，不要在回复中添加任何解释。我的研究是："+kw
+                    "content": "你是一位精通PubMed检索的学者，请你分析我的研究内容。基于PubMed语法构建检索公式，直接提供最终的PubMed检索公式（不用对回答进行解释）,且检索式不能包含中文。我的研究是："+kw
                 }
             ]
         )
@@ -108,8 +117,8 @@ def Gemini_research(kw,openkey,proxy='https://api.surger.xyz/v1'):
     if not proxy:
         data = {
         'model': 'gpt-3.5-turbo',
-        'messages': [{'role': 'user', 'content': "你是一位精通PubMed检索的学者，请你分析我提供的研究主题和关键词。基于PubMed语法构建检索公式。确保检索公式精确且实用。直接仅回复最终的PubMed检索公式,且检索式不能包含中文，不要在回复中添加任何解释。我的研究是："+kw}],
-        'temperature': 0.8,
+        'messages': [{'role': 'user', 'content': "你是一位精通PubMed检索的学者，请你分析我的研究内容。基于PubMed语法构建检索公式，直接提供最终的PubMed检索公式（不用对回答进行解释）,且检索式不能包含中文。我的研究是："+kw}],
+        'temperature': 0.7,
         }
         response = Gemini(data,openkey)
     else:
@@ -117,9 +126,9 @@ def Gemini_research(kw,openkey,proxy='https://api.surger.xyz/v1'):
         openai.api_key = openkey
         completion = openai.ChatCompletion.create(
         model="gemini-pro",
-        temperature = 0.8,
+        temperature = 0.7,
         messages=[
-            {"role": "user", "content": "你是一位精通PubMed检索的学者，请你分析我提供的研究主题和关键词。基于PubMed语法构建检索公式。确保检索公式精确且实用。直接仅回复最终的PubMed检索公式,且检索式不能包含中文，不要在回复中添加任何解释。我的研究是："+kw}
+            {"role": "user", "content": "你是一位精通PubMed检索的学者，请你分析我的研究内容。基于PubMed语法构建检索公式，直接提供最终的PubMed检索公式（不用对回答进行解释）,且检索式不能包含中文。我的研究是："+kw}
         ]
         )
         response = completion.choices[0].message['content']
@@ -219,8 +228,6 @@ def main(pages, kw, year,excel_path,progress_callback,proxy=None):
 
 
 # 文献下载部分
-
-
 def Pubmed_download(excel,progress_callback,proxy=None):
     print('开始下载.....')
     pdf_folder = os.path.join(father_path, 'pdf')
@@ -270,11 +277,20 @@ def Pubmed_download(excel,progress_callback,proxy=None):
 
 def sci_hub(doi=None, folder=os.path.join(father_path, 'pdf'), filename=None, proxy=None):
     output_folder = folder
-    scihub_url = "https://www.sci-hub.se/"
-    if proxy:
-        response = requests.post(scihub_url, data={"request": doi},proxies={"http": "http://{}".format(proxy)})
-    else:
-        response = requests.post(scihub_url, data={"request": doi})
+    scihubs = ["https://www.sci-hub.st/","https://www.sci-hub.se/"]
+    for idx in range(2):
+        try:
+            scihub_url = scihubs[idx]
+            if proxy:
+                response = requests.post(scihub_url, data={"request": doi},proxies={"http": "http://{}".format(proxy)})
+            else:
+                response = requests.post(scihub_url, data={"request": doi})
+            break
+        except:
+            if idx >= 1:
+                return 0
+            else:
+                continue
     soup = BeautifulSoup(response.content, features="html.parser")
     flag = False
     n = 0
@@ -315,36 +331,11 @@ def read_cookies(cookies_path,publish_name):
         data = f.read()
         cookies = json.loads(data)
         cookie = cookies[publish_name][0]
-    return cookie
-
-def download_stroke_pdf(doi, cookies, save_path,proxy):  # stroke/AHA 期刊的下载 10.1161
-    try:
-        url = f"https://www.ahajournals.org/doi/pdf/{doi}"
-        headers = {
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-        "Accept-Language": "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
-        "cache-control": "max-age=0",
-        "cookie": f"{cookies}",
-        "Sec-Fetch-Dest": "document",
-        "Sec-Fetch-Mode": "navigate",
-        "Sec-Fetch-Site": "same-origin",
-        "Sec-Fetch-User": "?1",
-        "Upgrade-Insecure-Requests": "1",
-        "User-Agent": UserAgent().random,
-    }
-        response = requests.get(url,headers=headers,stream=True,proxies={"http": "http://{}".format(proxy)})
-        response.raise_for_status() 
-        with open(save_path, 'wb') as f:
-            for chunk in response.iter_content(chunk_size=8192):
-                f.write(chunk)
-        print(f"下载成功：{save_path}")
-        return 1
-    except requests.RequestException as e:
-        print(f"下载失败：{url}，原因：{str(e)}")
-        return 0
+    return cookie 
 
 def download_operation(excel_path,progress_callback,proxy=None):
         Pubmed_download(excel_path,progress_callback,proxy)
+        spicial_dwonloader = CookieDownload(cookie_file=root_path+"/cookie.txt",proxy=proxy,**download_cfg)  # cookie下载器实例
         Df = pd.read_excel(excel_path, engine='openpyxl')
         all_paper = len(Df['download'])
         ok_paper = len(Df[Df['download'] == 1])
@@ -352,13 +343,8 @@ def download_operation(excel_path,progress_callback,proxy=None):
         for index, raw in Df.iterrows():
             if raw['download'] == 0:
                 flag = sci_hub(raw['doi'], filename=re.sub(r'[\\/:*?"<>|]', '_', raw['title']),proxy=proxy)
-                if flag==0 and "10.1161" in raw["doi"]:  # 加入了AHA期刊的cookie下载, 更多期刊接口也应该接在这
-                    try:
-                        cookie = read_cookies(root_path+"/cookie.txt",'AHA')
-                    except:
-                        cookie = "nooooo"
-                        print("请注意检查cookie.txt文件是否正确")
-                    flag = download_stroke_pdf(raw['doi'], cookie, save_path=re.sub(r'[\\/:*?"<>|]', '_', raw['title']),proxy=proxy)
+                if flag==0 : 
+                    flag = spicial_dwonloader.download(doi=raw['doi'], save_path=re.sub(r'[\\/:*?"<>|]', '_', raw['title']))
                 Df.at[index, 'download'] = flag
                 ok_paper+=1
                 progress_callback(int((ok_paper / all_paper) * 100))

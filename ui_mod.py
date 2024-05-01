@@ -15,7 +15,7 @@ from PyQt5.QtGui import QIcon
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(511, 754)
+        MainWindow.resize(720, 754)
         font = QtGui.QFont()
         font.setFamily("仿宋")
         font.setPointSize(10)
@@ -210,7 +210,8 @@ class Ui_MainWindow(object):
         self.groupBox_3.setTitle(_translate("MainWindow", "网络设置"))
         self.checkBox.setText(_translate("MainWindow", "使用随机代理池"))
         self.label_5.setText(_translate("MainWindow", "配置个人代理:"))
-        self.lineEdit_3.setText(_translate("MainWindow", "coming soon"))
+        self.lineEdit_3.setText(_translate("MainWindow", "此功能暂未添加"))
+        self.lineEdit_3.setReadOnly(True)
         self.commandLinkButton.setText(_translate("MainWindow", "MedSpider Created By BecomingW"))
         self.groupBox_5.setTitle(_translate("MainWindow", "日志"))
         self.groupBox_6.setTitle(_translate("MainWindow", "表格预览"))

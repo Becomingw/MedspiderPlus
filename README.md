@@ -4,10 +4,19 @@
 
 <img src="https://image-1307946721.cos.ap-shanghai.myqcloud.com/20240424213005.png" width=200 />
 
+#### 更新：
+2024.5.1 
+- 使用更便捷的方式添加cookie法下载，添加cookie池功能；
+- 添加sichub下载池（sci-hub.st、scihub.se）；
+- 添加yaml配置文件，更轻易的配置默认配置（不用再每次启动都要再输一次apikey了🧐）；
+- 添加kimi模型，并优化了所有模型的Prompt，出关键词更准确，更稳定。
+
 ## 2.简介📝：
 简体中文 | [English](./README_en.md)
 
-与[Medspider](https://github.com/Becomingw/Med-Spider)相似。该项目是一个基于Python的GUI（Tkinter）工具，旨在通过让ChatGPT提供的关键词，从PubMed数据库中检索相关文献并提供免费文献的PDF下载。相比自己给关键词（写正则表达式），ChatGPT更擅长这一任务，你要做的就是给它一个你想要了解的领域🤓！
+如果本程序对你有帮助，请给我一个star🤗。
+
+与[Medspider](https://github.com/Becomingw/Med-Spider)相似。该项目是一个基于Python的GUI（Tkinter）工具，旨在通过让ChatGPT提供的关键词，从PubMed文献数据库中检索相关文献并提供免费文献的PDF下载。相比自己写检索关键词（写正则表达式），ChatGPT更擅长这一任务，你要做的就是给它一个你想要了解的领域🤓！
 
 相比Medspider **支持更多AI模型**：
 
@@ -15,6 +24,7 @@
 - GPT4
 - GeminPro
 - ChatGLM4
+- Kimi
 - 自定义模型：其他通过oneapi进行转发的模型 及 OpneAI所有模型
 
 **更美观的界面**：
@@ -54,7 +64,7 @@
 1. 克隆该项目到本地
 
 ```bash
-git clone https://github.com/Becomingw/MedSpiderPlus.git
+git clone https://github.com/Becomingw/MedspiderPlus.git
 cd  MedspiderPlus
 ```
 
@@ -100,7 +110,19 @@ ps:未针对海外用户进行优化，如果出现报错，请自行解决🤗�
 
 ### 4. 其他🧪：
 
-1.程序的核心程序都在utils.py内，用户可以自行优化其中的Prompt，加入更多下载的程序等；
+1.程序的核心程序都在utils.py内，用户可以自行优化其中的Prompt，加入更多下载的程序等：
+ - 1.1 下载程序现允许插件化加入， 你需要做的就是提供一个能从doi下载pdf的“方法”，并将它放入`cookie_download.py` 中.
+ - 1.2 在`utils.py`文件开头设置你的下载程序对应的tag和程序名，具体见`utils.py`文件内的注释。
+ - 每添加一个下载程序记得在`config.yaml`中设定对应的cookie,即使你的下载不需要cookie。
+
+2.程序的UI文件为Med.UI,可以自行丢进QtDesigner中重新设计，但是注意修改对应的main的内容。
+
+3.Enjoy it🥳。
+
+
+### 5.免费程序，请不要用于商业或非法用途😁
+    
+2.程序的UI文件为Med.UI,可以自行丢进QtDesigner中重新设计，但是注意修改对应的main的内容。
 
 2.外观程序在main.py的最低端，可以自行切换喜欢的主题，支持的主题https://github.com/UN-GCPDS/qt-material
 

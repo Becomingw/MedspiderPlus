@@ -15,6 +15,9 @@
   - [License](#license)
 
 ## Introduction
+简体中文[./README.md] | English
+
+if this project is helpful to you, please give me a star🤗.
 
 MedSpiderPlus, akin to [Medspider](https://github.com/Becomingw/Med-Spider), is a Python-based GUI tool designed to enhance literature retrieval from the PubMed database. This project leverages the advanced capabilities of various AI models like GPT3.5Turbo, GPT4, GeminPro, ChatGLM4, and other custom models supported by OpenAI, to generate relevant search keywords for literature research. The application provides an intuitive and more aesthetically pleasing interface developed using PyQt5 and the qt_material package, aimed at streamlining the literature search and retrieval process.
 

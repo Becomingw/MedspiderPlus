@@ -3,6 +3,7 @@ import os
 from utils import *
 
 father_path = os.getcwd()
+
 class Gpt_finder:
     def __init__(self):
         self.use_ai = True
@@ -39,6 +40,9 @@ class Gpt_finder:
         if self.model == 0:
             print("模型已设置为：gpt3.5turbo")
             return openai_research(query,self.apikey,"gpt-3.5-turbo",proxy=self.gpt_proxy)
+        elif self.model == 1:
+            print("模型已设置为：Kimi")
+            return openai_research(query,self.apikey,"moonshot-v1-8k",proxy=self.gpt_proxy)
         elif self.model == 2:
             print("模型已设置为：gpt4")
             return openai_research(query,self.apikey,"gpt-4",proxy=self.gpt_proxy)
