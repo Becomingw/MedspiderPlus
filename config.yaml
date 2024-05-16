@@ -1,5 +1,10 @@
 api_key: 
+excel_save_folder: E:\Medspider+
+pdf_folder: E:\Medspider+\\pdf
 cookie:
-  "10.1161": 
+  '10.1161':  # stroke AHA
   - MAID=VqK3IZIhW0i/hXTPEnQenQ==;MACHINE_LAST_SEEN=2024-04-23T07%3A11%3A39.974-07%3A00;JSESSIONID=39C20749408B87CA0A1FFCC0C9522F9D;__cf_bm=FNvZBuO8eZhHTCFR7JVn8UeiIt4sUXSiN1O8.XfYE9Q-1713797358-1.0.1.1-NHhtf5oPA8kLA.KlpuUUeiSCzO.APjaJxvcpqOJzWHogjNVCsvo5.YvxpF9.jkcCK_r5.MtiBjs53R7VU0msOw;cf_clearance=a1Hwj4jEGdV_xGjFNWBqNK8YFVhhc3y2nHpU_4h8D7U-1713795783-1.0.1.1-0vcqOj4lInANbtwWi.EFXeb3PapQAySyVaXcjI467IoUrtq2tMIc9Bc5j06FEdd5cnHXU2nfPMXS41FEjvHwTg
-  "RNSA": '123456' 
+  "10.1038": # nature communication
+  - idp_session=sVERSION_1e490d5ee-d52f-4059-af2c-1d176c4e33ac
+  "10.1007": # European radiology 以下cookie很快就会过期，过期后请用自己的，下面cookie支持所有sprinker的下载
+  - idp_session=sVERSION_1140aa7cb-cfac-47b8-ab38-b8b9a42152ad; idp_session_http=hVERSION_1358d0392-9e67-4a8e-996c-9b8ad6f01eac; idp_marker=9ba65b34-7dda-44ff-8ba3-72c164df0688; XKToken=5T59n2HtRir/UyOXdTAcwA==; user.uuid.v2="b818fb6c-078a-4d18-9ff2-98e7fec3ebb5"; sim-inst-token="1::1715868541434:cfe01c69"; trackid="56o61ske0iorwjah5vtvqjpp4"

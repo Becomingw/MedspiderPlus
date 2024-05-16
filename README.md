@@ -11,6 +11,12 @@
 - 添加yaml配置文件，更轻易的配置默认配置（不用再每次启动都要再输一次apikey了🧐）；
 - 添加kimi模型，并优化了所有模型的Prompt，出关键词更准确，更稳定。
 
+2024.5.16
+- 提供简易启动包（仅支持Windows）
+- 修复一些已知BUG，优化逻辑结构
+- 加入nature communication、European Radiology下载工具（各提供了一个cookie，过期后需要自行到浏览器获取，获取方式网上搜索）
+- 允许自定义设置excel保存地址，允许自定义设置PDF保存地址
+
 ## 2.简介📝：
 简体中文 | [English](./README_en.md)
 
@@ -25,7 +31,7 @@
 - GeminPro
 - ChatGLM4
 - Kimi
-- 自定义模型：其他通过oneapi进行转发的模型 及 OpneAI所有模型
+- 自定义模型及代理：其他通过oneapi进行转发的模型 及 OpneAI所有模型
 
 **更美观的界面**：
 
@@ -45,13 +51,13 @@
 
 **可下载更多文章**：
 
-后续有时间将更新直接从出版商处下载文献（cookie法）。
+后续有时间将更新各出版社OA文献下载插件。
 
-目前已支持：AHA杂志社（大善人🤤，大部分期刊都是解锁的）
+目前已支持：AHA（Stroke）、Nature Commmunication、 European Radiology
 
 **去除所有翻译功能**：
 
-后续有时间将利用MedSpider的表格做个大的，机翻不仅不能带来什么好处，还增加程序冗余与报错。如确实需要翻译，可到excel中一行公式直接翻译（具有问Bing🥱）
+后续有时间将利用MedSpider的表格做个大的，机翻不仅不能带来什么好处，还增加程序冗余与报错。
 
 ### 3.使用📇：
 
@@ -82,7 +88,7 @@ python main.py
 
 **简易方法**📖(推荐)：
 
-下载[Release](https://github.com/Becomingw/MedspiderPlus/releases/tag/0.1beta)的网盘MedspiderPlus.7z文件（提供蓝奏云与谷歌网盘下载），解压后，点击`install.bat` 或 `run_first.vbs` 之后双击`run.vbs`即可运行。
+下载[Release](https://github.com/Becomingw/MedspiderPlus/releases/tag/1.0)的网盘MedspiderPlus.zip文件（提供百度云与谷歌网盘下载），解压后，点击`Medspider.exe`即可运行，相关源码也同时包含在压缩文件夹内。exe文件由bat文件编译而来，可选择自行编译。
 
 ps:未针对海外用户进行优化，如果出现报错，请自行解决🤗。
 
@@ -100,7 +106,8 @@ ps:未针对海外用户进行优化，如果出现报错，请自行解决🤗�
 
 6.不建议大批量下载，本程序本质是一个爬虫，所以也你懂的😇。
 
-7.~~cookie.txt 内格式应符合json格式~~，现已整合进入`config.yaml`。
+7.~~cookie.txt 内格式应符合json格式~~，现已整合进入`config.yaml`，你的excel保存地址，pdf保存地址都在yaml文件中设置这设置。
+- 格式示例： excel_save_folder: E:\Medspider+ (冒号不可少，冒号前的内容不可更改，冒号后有一空格)
 
 8.程序AI部分代理主要接入了来自DeepAIR深影的[GratAPI](https://api.surger.xyz)🎟️，一个基于OneAPI的免费代理。
 

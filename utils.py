@@ -12,10 +12,9 @@ from retrying import retry
 import yaml
 from cookie_download import *
 
-download_cfg ={'10.1161':stroke,           # 这里是使用特殊下载的定义处，其中stroke是stroke下载方法（见cookie_download.py）,"10.1161"是来自doi的发行商标识，   
+download_cfg ={'10.1161':stroke,'10.1038':naturecom,'10.1007':springer_ER         # 这里是使用特殊下载的定义处，其中stroke是stroke下载方法（见cookie_download.py）,"10.1161"是来自doi的发行商标识，   
 }
 
-father_path = os.getcwd()
 root_path = os.path.dirname(os.path.realpath(__file__))
 
 
@@ -228,9 +227,8 @@ def main(pages, kw, year,excel_path,progress_callback,proxy=None):
 
 
 # 文献下载部分
-def Pubmed_download(excel,progress_callback,proxy=None):
+def Pubmed_download(excel,pdf_folder,progress_callback,proxy=None):
     print('开始下载.....')
-    pdf_folder = os.path.join(father_path, 'pdf')
     df = pd.read_excel(excel, engine='openpyxl')
     ok_paper = len(df[df['download'] == 1])
     for index, link in df.iterrows():
@@ -244,6 +242,8 @@ def Pubmed_download(excel,progress_callback,proxy=None):
             response.raise_for_status()
             response.encoding = response.apparent_encoding
             soup = BeautifulSoup(response.text, 'html.parser')
+            if type(soup) == None:
+                continue
             link_tem = soup.find('li', attrs={'class': 'pdf-link other_item'})
             real_link = link_tem.find('a').get('href')
             real_link = 'https://www.ncbi.nlm.nih.gov' + real_link
@@ -275,7 +275,7 @@ def Pubmed_download(excel,progress_callback,proxy=None):
 
 
 
-def sci_hub(doi=None, folder=os.path.join(father_path, 'pdf'), filename=None, proxy=None):
+def sci_hub(doi, folder, filename, proxy=None):
     output_folder = folder
     scihubs = ["https://www.sci-hub.st/","https://www.sci-hub.se/"]
     for idx in range(2):
@@ -333,18 +333,18 @@ def read_cookies(cookies_path,publish_name):
         cookie = cookies[publish_name][0]
     return cookie 
 
-def download_operation(excel_path,progress_callback,proxy=None):
-        Pubmed_download(excel_path,progress_callback,proxy)
-        spicial_dwonloader = CookieDownload(cookie_file=root_path+"/cookie.txt",proxy=proxy,**download_cfg)  # cookie下载器实例
+def download_operation(excel_path,pdf_folder,progress_callback,proxy=None):
+        Pubmed_download(excel_path,pdf_folder,progress_callback,proxy)
+        spicial_dwonloader = CookieDownload(cookie_file=root_path+"\\config.yaml",proxy=proxy,**download_cfg)  # cookie下载器实例
         Df = pd.read_excel(excel_path, engine='openpyxl')
         all_paper = len(Df['download'])
         ok_paper = len(Df[Df['download'] == 1])
         progress_callback(int((ok_paper / all_paper) * 100))
         for index, raw in Df.iterrows():
             if raw['download'] == 0:
-                flag = sci_hub(raw['doi'], filename=re.sub(r'[\\/:*?"<>|]', '_', raw['title']),proxy=proxy)
+                flag = sci_hub(raw['doi'],pdf_folder, filename=re.sub(r'[\\/:*?"<>|]', '_', raw['title']),proxy=proxy)
                 if flag==0 : 
-                    flag = spicial_dwonloader.download(doi=raw['doi'], save_path=re.sub(r'[\\/:*?"<>|]', '_', raw['title']))
+                    flag = spicial_dwonloader.download(doi=raw['doi'], save_path=pdf_folder+"/"+re.sub(r'[\\/:*?"<>|]', '_', raw['title'])+".pdf")
                 Df.at[index, 'download'] = flag
                 ok_paper+=1
                 progress_callback(int((ok_paper / all_paper) * 100))
@@ -352,6 +352,7 @@ def download_operation(excel_path,progress_callback,proxy=None):
             Df.to_excel(excel_path, engine='openpyxl', index=False)
         except:
             print('请关闭excel文件后重试，本次表格写入失败！')
+        progress_callback(int((all_paper/ all_paper) * 100))
         print('Download all over!')
 
 

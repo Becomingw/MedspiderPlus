@@ -5,7 +5,7 @@ import os
 import pandas as pd
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt, QObject, pyqtSignal, QThread
-from PyQt5.QtGui import QStandardItemModel, QStandardItem, QTextCursor
+from PyQt5.QtGui import QStandardItemModel, QStandardItem, QTextCursor,QIcon
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
 from qt_material import apply_stylesheet
 
@@ -14,6 +14,7 @@ from ui_mod import Ui_MainWindow
 from utils import get_proxy,read_yaml
 root_path = os.path.dirname(os.path.realpath(__file__))
 
+cfg = read_yaml(root_path+"/config.yaml")
 
 class Stream(QObject):
     newText = pyqtSignal(str)
@@ -46,6 +47,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.setWindowIcon(QIcon(os.path.join(root_path,'logo.ico')))
         self.gpt_finder = Gpt_finder()  # 创建 Gpt_finder 实例
 
         # 设置重定向输出
@@ -65,6 +67,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         # 其他初始设置
         self.gpt_finder.use_ai = self.checkBox_2.isChecked()
+        self.gpt_finder.excel_save_path = cfg["excel_save_folder"]+"/medspider_save.xlsx"
+        self.gpt_finder.pdf_folder = cfg["pdf_folder"]
         self.gpt_finder.proxy = None
         self.gpt_finder.set_model(0)
         self.gpt_finder.set_year(1)
@@ -183,6 +187,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             event.accept()  
         else:
             event.ignore()  
+            
 
 if __name__ == "__main__":
     import sys

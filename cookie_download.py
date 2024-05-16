@@ -14,12 +14,13 @@ def cookies_pool(cfg_file):
 
 
 class CookieDownload:
-    def __init__(self, cookie_file,proxy=None):
+    def __init__(self, cookie_file,proxy=None,**publish_cfg):
         self.cookie = None
         self.cookie_pool = cookies_pool(cfg_file=cookie_file)
         self.publish_methods = None
         self.tags = None
         self.proxy = proxy
+        self.creat_publish_methods(**publish_cfg)
           
     def creat_publish_methods(self,**publish_methods):
         self.publish_methods = list(publish_methods.values())
@@ -93,11 +94,47 @@ def stroke(doi, cookies, save_path,proxy):  # stroke/AHA 期刊的下载 10.1161
     }
     lable = download_from_url(url,headers,save_path,proxy)
     return lable
+
+def naturecom(doi,cookies,save_path,proxy):
+    item = doi.replace('10.1038/','')
+    url = f'https://www.nature.com/articles/{item}.pdf'
+    headers = {
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "Accept-Language": "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
+    "cache-control": "max-age=0",
+    "cookie": f"{cookies}",
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "same-origin",
+    "Sec-Fetch-User": "?1",
+    "Upgrade-Insecure-Requests": "1",
+    "User-Agent": UserAgent().random,
+    }
+    lable = download_from_url(url,headers,save_path,proxy)
+    return lable
+    
+def springer_ER(doi,cookies,save_path,proxy):
+    url = f"https://link.springer.com/content/pdf/{doi}.pdf"
+    headers = {
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "Accept-Language": "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
+    "Accept_Encoding":"gzip,deflate",
+    "cache-control": "max-age=0",
+    "cookie": f"{cookies}",
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "same-origin",
+    "Sec-Fetch-User": "?1",
+    "Upgrade-Insecure-Requests": "1",
+    "User-Agent": UserAgent().random,
+    }
+    lable = download_from_url(url,headers,save_path,proxy)
+    return lable
         
         
 if __name__ == '__main__':
-    doi = "10.1161/STROKEAHA.122.039649"
-    download_cfg ={'10.1161':stroke,   # 这里是使用特殊下载的定义处，其中stroke是stroke下载方法（见cookie_download.py）,"10.1161"是来自doi的发行商标识，   
+    doi = "10.1007/s00330-024-10785-6"
+    download_cfg ={'10.1161':stroke, '10.1038':naturecom,'10.1007':springer_ER  # 这里是使用特殊下载的定义处，其中stroke是stroke下载方法（见cookie_download.py）,"10.1161"是来自doi的发行商标识，   
 }
     cook = CookieDownload(cookie_file=root_path+'/config.yaml',proxy=None)
     cook.creat_publish_methods(**download_cfg)

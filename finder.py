@@ -13,7 +13,8 @@ class Gpt_finder:
         self.proxy = None
         self.gpt_proxy = "https://api.surger.xyz/v1"
         self.apikey = None
-        self.excel_save_path = father_path+"/MedSpider_save.xlsx"
+        self.excel_save_path = None
+        self.pdf_folder = None
         self.custom_model = None
 
     def set_model(self,model):
@@ -74,7 +75,7 @@ class Gpt_finder:
         return kw+"\n"+result
 
     def download_pdf(self,progress_callback):
-        return download_operation(self.excel_save_path,progress_callback=progress_callback,proxy=self.proxy)
+        return download_operation(self.excel_save_path,pdf_folder=self.pdf_folder,progress_callback=progress_callback,proxy=self.proxy)
 
 
 if __name__ =="__main__":
